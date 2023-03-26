@@ -10,8 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static PageObject.OrderPage.PersonalData.buttonNext;
-
 public class MainPage {
 
     private final WebDriver driver;
@@ -138,17 +136,15 @@ public class MainPage {
     }
     public void pressTheButtonCreateOrderTop() {
         driver.findElement(CREATE_ORDER_BUTTON_TOP).click();
-        PersonalData personalData = new PersonalData(driver);
         WebElement elementWait = new WebDriverWait(driver, Duration.ofSeconds(30))
-                .until(ExpectedConditions.visibilityOfElementLocated(personalData.buttonNext));
+                .until(ExpectedConditions.visibilityOfElementLocated(PersonalData.BUTTON_NEXT));
     }
 
     public void pressTheButtonCreateOrderBottom() {
         WebElement element = driver.findElement(IS_IT_POSSIBLE_TO_CANCEL_THE_ORDER_QUESTION);
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
         driver.findElement(CREATE_ORDER_BUTTON_BOTTOM).click();
-        PersonalData personalData = new PersonalData(driver);
         WebElement elementWait = new WebDriverWait(driver, Duration.ofSeconds(30))
-                .until(ExpectedConditions.visibilityOfElementLocated(personalData.buttonNext));
+                .until(ExpectedConditions.visibilityOfElementLocated(PersonalData.BUTTON_NEXT));
     }
 }

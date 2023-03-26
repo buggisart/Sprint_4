@@ -4,7 +4,6 @@ import PageObject.OrderPage.RentData;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.hamcrest.MatcherAssert;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +13,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -22,7 +22,7 @@ import java.time.Duration;
 import static org.hamcrest.CoreMatchers.containsString;
 
 @RunWith(Parameterized.class)
-public class CreateOrderTest {
+public class    CreateOrderTest {
 
     private WebDriver driver;
     private String name;
@@ -33,6 +33,11 @@ public class CreateOrderTest {
     // т.к. нет четких требований, что за окно должно появиться после успешного заказа, я проверил в другом браузере
     // во всплывающем окне должна быть фраза "Заказ оформлен"
     private By potentialWindowWithSuccessMessage = By.xpath(".//*[contains(text(), 'Заказ оформлен')]");
+
+    private MainPage mainPage;
+    private PersonalData personalData;
+    private RentData rentData;
+
 
     public CreateOrderTest(String name, String surname, String address, String phone, String comment) {
         this.name = name;
@@ -55,13 +60,13 @@ public class CreateOrderTest {
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
         driver.get("https://qa-scooter.praktikum-services.ru/");
+        mainPage = new MainPage(driver);
+        personalData = new PersonalData(driver);
+        rentData = new RentData(driver);
     }
     //сценарий с верхней кнопкой заказа
     @Test
     public void createOrderWithTopOrderButtonSuccess() {
-        MainPage mainPage = new MainPage(driver);
-        PersonalData personalData = new PersonalData(driver);
-        RentData rentData = new RentData(driver);
         mainPage.pressTheButtonCreateOrderTop();
         personalData.fillPersonalDataFields(name, surname, address, phone);
         personalData.pressTheButtonNext();
@@ -81,9 +86,6 @@ public class CreateOrderTest {
     //сценарий с нижней кнопкой заказа
     @Test
     public void createOrderWithBottomOrderButtonSuccess() {
-        MainPage mainPage = new MainPage(driver);
-        PersonalData personalData = new PersonalData(driver);
-        RentData rentData = new RentData(driver);
         mainPage.pressTheButtonCreateOrderBottom();
         personalData.fillPersonalDataFields(name, surname, address, phone);
         personalData.pressTheButtonNext();
