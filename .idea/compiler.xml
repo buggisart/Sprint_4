@@ -9,5 +9,8 @@
         <module name="Sprint_4" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SeleniumWebinar4" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
